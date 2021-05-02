@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <TopNavigation></TopNavigation>
     <router-view class="main-view"></router-view>
   </div>
 </template>
 
 <script>
-
+import TopNavigation from "./components/TopNavigation"
 export default {
   name: 'App',
   components: {
-
+    TopNavigation
   }
 }
 </script>
@@ -22,6 +22,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+body {
+  margin: 0;
 }
 </style>
