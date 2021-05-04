@@ -1,27 +1,15 @@
 <template>
   <div class="container">
-      <div id="image">
-          <img  :src="require('../assets/stickynote.png')"/>
-      </div>
-      <div id="text">
-
-      </div>
-      <div id="buttons">
-
-      </div>
   </div>
 </template>
 
 <script>
-  
-
 
 export default {
-  name: "Stage2b",
+  name: "template",
   props: {},
   data: function () {
     return {
-
 
     };
   },

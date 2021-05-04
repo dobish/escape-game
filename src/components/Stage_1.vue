@@ -1,24 +1,34 @@
 <template>
   <div class="container">
-    <p>You hear your name called out...</p>
-    <p>{{ username }}!!</p>
-    <p>It sounds like it's coming from the church</p>
+    <TopBar title="time to move" imageName="B&W_St_Nikolaj.jpg"></TopBar>
+    <div class="story-box">
+      <p>
+        <span class="username-input">{{ username }}</span>
+        the Time is running, You should better get to the next location....
+      </p>
+    </div>
 
-    <h2>{{ timerCount }}</h2>
+<div class="timer">
+  {{timerCount}}
+</div>
   </div>
 </template>
 
 <script>
 import Mapbox from "mapbox-gl";
+import TopBar from "./TopBar";
 
 export default {
   name: "Stage_1",
   props: {},
+  components: {
+    TopBar,
+  },
   data: function () {
     return {
       username: "",
-      timerCount: 10,
-      message: ''
+      timerCount: 1000,
+      message: "",
     };
   },
 
@@ -30,7 +40,7 @@ export default {
             this.timerCount--;
           }, 1000);
         } else {
-          this.message = 'you just missed him';
+          this.message = "you just missed him";
           this.goToNextStage();
         }
       },
@@ -60,8 +70,6 @@ export default {
       console.log("Latitude = " + position.coords.latitude);
       console.log("Longitude = " + position.coords.longitude);
     }
-
-
   },
 
   created() {
@@ -77,29 +85,38 @@ h1 {
   font-weight: 800;
   margin-bottom: 30px;
 }
-.timing-runner {
-  margin-bottom: 50px;
-  padding: 50px 0px;
+
+.username-input {
+  font-size: 2em;
+  color: #970303;
 }
-.timing-runner .timing-blog .days-box {
-  padding: 0px 2%;
-  text-align: center;
+
+.story-box {
+  font-size: 2em;
+  font-family: "Unica One", cursive;
+  width: 100%;
 }
-.timing-runner .timing-blog .days-box .day {
-  font-size: 70px;
-  color: #000000;
-  font-family: "robotobold";
-  line-height: 1;
+
+.story-box > p {
+  width: 80%;
+  margin-left: 10%;
 }
-.timing-runner .timing-blog .days-box span {
-  color: #ed1b24;
-  font-size: 25px;
-  font-weight: 800;
-  text-transform: uppercase;
+
+.timer {
+  display: block;
+  font-family: "Bangers", cursive;
+  width: 50%;
+  border-radius: 10px;
+  border:none;
+  height: 20%;
+  color: #970303;
+  font-size: 2em;
+  margin-left: 25%;
+background-color: #E1E1E1;
+
+
 }
-.timing-runner .timing-blog {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+
+
 </style>
