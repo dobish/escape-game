@@ -58,22 +58,44 @@ export default {
     // Retrieve saved username from LocalStorage
     this.username = window.localStorage.getItem("username");
 
-    //Check if geolocation is available on the device - Give prompt to accept
+
+  },
+
+  created() {
+    this.mapbox = Mapbox;
+
+        //Check if geolocation is available on the device - Give prompt to accept
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
       console.log("Geolocation is unavailable");
     }
 
+setInterval(navigator.geolocation.getCurrentPosition(showPosition), 300);
+
+
+
     //Get current position
     function showPosition(position) {
-      console.log("Latitude = " + position.coords.latitude);
-      console.log("Longitude = " + position.coords.longitude);
-    }
-  },
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
 
-  created() {
-    this.mapbox = Mapbox;
+      //let churchCoordinates = {latitude: '55.49058418501905', longitude: '9.47216005990786'};
+
+      let dormCoordinates = {latitude: '55.49380475700325', longitude: '9.470198347154795'};
+
+      console.log(parseFloat(dormCoordinates.latitude).toFixed(3));
+      console.log(parseFloat(latitude).toFixed(3));
+
+
+
+
+
+      if (parseInt(dormCoordinates.latitude).toFixed(3) == parseInt(latitude).toFixed(3) & parseInt(dormCoordinates.longitude).toFixed(3) == parseInt(longitude).toFixed(3)){
+        console.log('Jesteś u celu');
+
+      }
+    }
   },
 };
 </script>
