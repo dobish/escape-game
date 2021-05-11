@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+    <Overlay
+      v-if="!opened"
+      v-bind:imageSrc="imageSrcData"
+      v-bind:Title="titleData"
+      v-bind:Description="descriptionData"
+      class="overlay"
+      @clicked="hideOverlay"
+      v-bind:Router="stage"
+    ></Overlay>
     <TopBar title="time to move" imageName="B&W_St_Nikolaj.jpg"></TopBar>
     <div class="story-box">
       <p>
@@ -8,27 +17,40 @@
       </p>
     </div>
 
-<div class="timer">
-  {{timerCount}}
-</div>
+    <div class="timer">
+      {{ timerCount }}
+    </div>
+    <div class="debugging">
+      <p></p>
+    </div>
   </div>
 </template>
 
 <script>
 import Mapbox from "mapbox-gl";
 import TopBar from "./TopBar";
+import Overlay from "./Overlay.vue";
 
 export default {
   name: "Stage_1",
   props: {},
   components: {
     TopBar,
+    Overlay,
   },
   data: function () {
     return {
       username: "",
-      timerCount: 1000,
+      timerCount: 10,
       message: "",
+      userCoords: { latitude: "", longitude: "" },
+      churchCoords: { latitude: "", longitude: "" },
+      opened: false,
+      stage: "",
+      descriptionData: "",
+      titleData: "",
+      imageSrcData: "",
+      onTime: true,
     };
   },
 
@@ -40,8 +62,9 @@ export default {
             this.timerCount--;
           }, 1000);
         } else {
-          this.message = "you just missed him";
-          this.goToNextStage();
+          this.onTime = false;
+
+          //this.goToNextStage();
         }
       },
       immediate: true, // This ensures the watcher is triggered upon creation
@@ -52,48 +75,104 @@ export default {
       let router = this.$router;
       router.push("stage2b");
     },
+
+    getPosition: function (position) {
+      this.userLatitude = position.coords.latitude;
+      this.userLongitude = position.coords.longitude;
+    },
+
+    hideOverlay: function (value) {
+      console.log(value);
+      this.opened = value;
+    },
   },
 
   mounted() {
     // Retrieve saved username from LocalStorage
     this.username = window.localStorage.getItem("username");
-
-
   },
 
   created() {
     this.mapbox = Mapbox;
+   var self =this;
+    let onTime = this.onTime;
 
-        //Check if geolocation is available on the device - Give prompt to accept
+   
+   
+
+
+
+
+    // var userLat = this.userCoords.latitude;
+    //var userLong = this.userCoords.longitude;
+    //Check if geolocation is available on the device - Give prompt to accept
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
       console.log("Geolocation is unavailable");
     }
 
-setInterval(navigator.geolocation.getCurrentPosition(showPosition), 300);
-
-
+    setInterval(function () {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }, 5000);
 
     //Get current position
     function showPosition(position) {
+
+      
+
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
 
-      //let churchCoordinates = {latitude: '55.49058418501905', longitude: '9.47216005990786'};
+      //userLat = position.coords.latitude;
+      //userLong = position.coords.longitude;
 
-      let dormCoordinates = {latitude: '55.49380475700325', longitude: '9.470198347154795'};
+      let churchCoordinates = {
+        latitude: "55.49058418501905",
+        longitude: "9.47216005990786",
+      };
 
-      console.log(parseFloat(dormCoordinates.latitude).toFixed(3));
+      //let dormCoordinates = {latitude: '55.49380475700325', longitude: '9.470198347154795'};
+
+      console.log(parseFloat(churchCoordinates.latitude).toFixed(3));
+      console.log(latitude);
       console.log(parseFloat(latitude).toFixed(3));
 
+      // & parseInt(churchCoordinates.longitude).toFixed(3) == parseInt(longitude).toFixed(3)
+
+      let churchLatitude = parseFloat(churchCoordinates.latitude).toFixed(3);
+      let churchLongitude = parseFloat(churchCoordinates.longitude).toFixed(3);
+
+      let userLatitude = parseFloat(latitude).toFixed(3);
+      let userLongitude = parseFloat(longitude).toFixed(3);
+
+      if (
+        (churchLatitude == userLatitude) &
+        (churchLongitude == userLongitude)
+      ) {
+          
+  
+        console.log("Jesteś u celu");
 
 
 
-
-      if (parseInt(dormCoordinates.latitude).toFixed(3) == parseInt(latitude).toFixed(3) & parseInt(dormCoordinates.longitude).toFixed(3) == parseInt(longitude).toFixed(3)){
-        console.log('Jesteś u celu');
-
+        if (onTime == true) {
+          self.stage = "Stage2";
+          self.descriptionData =
+            "Congratulations! You reached right ON time!";
+          self.titleData = "the church";
+          self.imageSrcData = "B&W_St_Nikolaj_square.jpg";
+          self.opened == true
+        } else {
+          self.stage = "Stage2";
+          self.descriptionData =
+            "You didnt make it in time to see who called... Nevertheless,you found something.";
+          self.titleData = "the church";
+          self.imageSrcData = "sticky_note_front.png";
+                    self.opened == true
+        }
+      } else {
+        console.log("go further!!!!!!!!!");
       }
     }
   },
@@ -106,6 +185,12 @@ h1 {
   text-align: center;
   font-weight: 800;
   margin-bottom: 30px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0px;
+  z-index: 1000;
 }
 
 .username-input {
@@ -129,16 +214,11 @@ h1 {
   font-family: "Bangers", cursive;
   width: 50%;
   border-radius: 10px;
-  border:none;
+  border: none;
   height: 20%;
   color: #970303;
   font-size: 2em;
   margin-left: 25%;
-background-color: #E1E1E1;
-
-
+  background-color: #e1e1e1;
 }
-
-
-
 </style>

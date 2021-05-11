@@ -1,19 +1,24 @@
 <template>
   <div class="container">
-    <TopBar title="the note" imageName="sticky_note.png_front"></TopBar>
+      <div class="story-box">
+      <p>
+        <span class=""></span>
+      </p>
+    </div>
+
+    <div class="button">
+        <button>    </button>
+    </div>
   </div>
 </template>
 
 <script>
-  
-
 
 export default {
-  name: "Stage2b",
+  name: "story",
   props: {},
   data: function () {
     return {
-
 
     };
   },

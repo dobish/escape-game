@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <nav>
-dsadasdasd
+Test version 1.0V
       </nav>
   </div>
 </template>
