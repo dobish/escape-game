@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Overlay
-      v-if="!opened"
+      v-if="opened"
       v-bind:imageSrc="imageSrcData"
       v-bind:Title="titleData"
       v-bind:Description="descriptionData"
@@ -62,7 +62,7 @@ export default {
             this.timerCount--;
           }, 1000);
         } else {
-          this.onTime = false;
+          this.onTime = !this.onTime;
 
           //this.goToNextStage();
         }
@@ -95,7 +95,7 @@ export default {
   created() {
     this.mapbox = Mapbox;
    var self =this;
-    let onTime = this.onTime;
+ 
 
    
    
@@ -156,20 +156,22 @@ export default {
 
 
 
-        if (onTime == true) {
+        if (self.onTime == true) {
+          console.log('ssssss')
           self.stage = "Stage2";
           self.descriptionData =
             "Congratulations! You reached right ON time!";
           self.titleData = "the church";
           self.imageSrcData = "B&W_St_Nikolaj_square.jpg";
-          self.opened == true
+          self.opened = true;
         } else {
-          self.stage = "Stage2";
+           self.opened = true;
+          self.stage = "Stage2b";
           self.descriptionData =
             "You didnt make it in time to see who called... Nevertheless,you found something.";
           self.titleData = "the church";
-          self.imageSrcData = "sticky_note_front.png";
-                    self.opened == true
+          self.imageSrcData = "B&W_St_Nikolaj_square.jpg";
+                   
         }
       } else {
         console.log("go further!!!!!!!!!");
