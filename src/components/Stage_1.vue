@@ -114,7 +114,7 @@ export default {
 
     setInterval(function () {
       navigator.geolocation.getCurrentPosition(showPosition);
-    }, 5000);
+    }, 1000);
 
     //Get current position
     function showPosition(position) {
