@@ -6,7 +6,13 @@
     ></TopBar>
     <div class="story-box">
       <p class="welcome-box">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor ac dolor sed imperdiet. Morbi sollicitudin at enim et convallis. Nulla ac libero sed lacus sagittis cursus luctus sed justo. Vivamus sed neque cursus, efficitur nisi in, congue sapien. Donec scelerisque turpis vel lacus viverra scelerisque.
+        To solve riddles by using your phone, the game needs permission to access its camera, sensors and GPS.
+
+By continuing you accept these terms. 
+Enjoy!
+
+
+
       </p>
     </div>
       <div class="input">

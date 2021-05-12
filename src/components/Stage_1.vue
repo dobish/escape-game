@@ -12,8 +12,9 @@
     <TopBar title="time to move" imageName="B&W_St_Nikolaj.jpg"></TopBar>
     <div class="story-box">
       <p>
-        <span class="username-input">{{ username }}</span>
-        the Time is running, You should better get to the next location....
+        <!-- <span class="username-input">{{ username }}</span> -->
+        You hear your name called out - sounds like it’s coming from 
+the church. Try and get there before time reaches zero To see who it is... 
       </p>
     </div>
 
@@ -201,7 +202,7 @@ h1 {
 }
 
 .story-box {
-  font-size: 2em;
+  font-size: 1.5em;
   font-family: "Unica One", cursive;
   width: 100%;
 }
