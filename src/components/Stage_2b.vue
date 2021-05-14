@@ -1,16 +1,19 @@
 <template>
   <div class="container">
-    <TopBar title="the church" v-bind:imageName="TopBarImage"></TopBar>
+    <TopBar v-bind:title="title" v-bind:imageName="TopBarImage"></TopBar>
     <div class="story-box">
-      <h2 v-if="!pressed" class="title">You found a note!</h2>
-      <p v-if="pressed">Try using your phone to investigate the strange note</p>
+      <h2 v-if="investigate" class="title">{{storyTitle}}</h2>
+      <p v-if="investigate && !flipped">Try using your phone to investigate the strange note</p>
+      <p v-if="flipped">On the backside of the note it has a pretty distinct <span>v</span> and some readable however incomprehensible text. </p>
+      
       <img v-if="!pressed" :src="require('../assets/' + image + '')" alt="" />
-      <div>
-        {{value}}
-      </div>
+ 
       <div class="buttons" v-if="!pressed">
         <button @click="investigateEvent()">Investigate</button>
         <button>Throw away</button>
+      </div>
+      <div class="button-investigate" v-if="flipped">
+        <button>Investigate</button>
       </div>
 
 
@@ -30,9 +33,12 @@ export default {
       investigate: false,
       throwAway: false,
       pressed: false,
+      flipped: false,
       value: '',
       image: 'sticky_note_front.png',
-      TopBarImage: 'B&W_St_Nikolaj.jpg'
+      TopBarImage: 'B&W_St_Nikolaj.jpg',
+      storyTitle: 'You found a note!',
+      title: 'the church'
     };
   },
 
@@ -45,7 +51,8 @@ export default {
     investigateEvent: function() {
       this.investigate = true;
       this.pressed = true;
-      this.TopBarImage = 'sticky_note_front.png'
+      this.TopBarImage = 'sticky_note_front.png',
+      this.title = 'the note'
     }
   },
 
@@ -73,10 +80,12 @@ var handleOrientationEvent = function (frontToBack, leftToRight) {
 
       self.value = left;
 
-      if (self.investigate == true & left >= 85 ) {
+      if (self.investigate == true & left >= 85 || left <= -85 ) {
         self.vibrate();
         self.test = true;
+        self.flipped = true;
         self.TopBarImage = 'sticky_note_back.png'
+        self.storyTitle = 'you flipped the note!'
 
       }
 }
@@ -88,6 +97,10 @@ var handleOrientationEvent = function (frontToBack, leftToRight) {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.container{ 
+height: 100%;
+}
 .story-box {
   width: 100%;
 }
@@ -96,7 +109,11 @@ var handleOrientationEvent = function (frontToBack, leftToRight) {
   font-family: "Unica One", cursive;
   width: 80%;
   margin-left: 10%;
-  font-size: 1.5em;
+  font-size: 1.2em;
+}
+
+.story-box > p > span {
+  color: #970303;
 }
 
 .story-box > img {
@@ -127,5 +144,20 @@ var handleOrientationEvent = function (frontToBack, leftToRight) {
   width: 100%;
   display: flex;
   
+}
+
+.button-investigate > button {
+    color: #970303;
+  font-family: "Bangers", cursive;
+  display: block;
+  width: 40%;
+  border-radius: 15px;
+  border: none;
+  height: 10%;
+  color: #970303;
+  font-size: 1.2em;
+  padding: 5%;
+  margin-top: 5%;
+  margin-left: 30%;
 }
 </style>

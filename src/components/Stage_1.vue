@@ -96,13 +96,6 @@ export default {
   created() {
     this.mapbox = Mapbox;
    var self =this;
- 
-
-   
-   
-
-
-
 
     // var userLat = this.userCoords.latitude;
     //var userLong = this.userCoords.longitude;
@@ -224,4 +217,5 @@ h1 {
   margin-left: 25%;
   background-color: #e1e1e1;
 }
+
 </style>
