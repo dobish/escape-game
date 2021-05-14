@@ -42,7 +42,7 @@ export default {
   data: function () {
     return {
       username: "",
-      timerCount: 10,
+      timerCount: 45,
       message: "",
       userCoords: { latitude: "", longitude: "" },
       churchCoords: { latitude: "", longitude: "" },
