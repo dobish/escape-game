@@ -13,7 +13,7 @@
         <button>Throw away</button>
       </div>
       <div class="button-investigate" v-if="flipped">
-        <button>Investigate</button>
+        <button @click="investigateFurther()">Investigate</button>
       </div>
 
 
@@ -53,6 +53,12 @@ export default {
       this.pressed = true;
       this.TopBarImage = 'sticky_note_front.png',
       this.title = 'the note'
+    },
+
+    investigateFurther: function(){
+      let router = this.$router;
+       router.push('findv');
+       console.log('sasasa')
     }
   },
 
