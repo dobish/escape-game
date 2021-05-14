@@ -13,12 +13,12 @@
     <div class="story-box">
       <p>
         <!-- <span class="username-input">{{ username }}</span> -->
-        You hear your name called out - sounds like it’s coming from 
-the church. Try and get there before time reaches zero To see who it is... 
+        You hear your name called out - sounds like it’s coming from the church.
+        Try and get there before time reaches zero To see who it is...
       </p>
     </div>
 
-    <div class="timer">
+    <div class="timer" @click="atTheChurch()">
       {{ timerCount }}
     </div>
     <div class="debugging">
@@ -86,6 +86,17 @@ export default {
       console.log(value);
       this.opened = value;
     },
+
+    atTheChurch: function () {
+      if (this.timerCount == 0) {
+        this.stage = "Stage2b";
+        this.descriptionData =
+          "You didnt make it in time to see who called... Nevertheless,you found something.";
+        this.titleData = "the church";
+        this.imageSrcData = "B&W_St_Nikolaj_square.jpg";
+        this.opened = !this.opened;
+      }
+    },
   },
 
   mounted() {
@@ -95,7 +106,7 @@ export default {
 
   created() {
     this.mapbox = Mapbox;
-   var self =this;
+    var self = this;
 
     // var userLat = this.userCoords.latitude;
     //var userLong = this.userCoords.longitude;
@@ -112,9 +123,6 @@ export default {
 
     //Get current position
     function showPosition(position) {
-
-      
-
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
 
@@ -144,28 +152,22 @@ export default {
         (churchLatitude == userLatitude) &
         (churchLongitude == userLongitude)
       ) {
-          
-  
         console.log("Jesteś u celu");
 
-
-
         if (self.onTime == true) {
-          console.log('ssssss')
+          console.log("ssssss");
           self.stage = "Stage2";
-          self.descriptionData =
-            "Congratulations! You reached right ON time!";
+          self.descriptionData = "Congratulations! You reached right ON time!";
           self.titleData = "the church";
           self.imageSrcData = "B&W_St_Nikolaj_square.jpg";
           self.opened = true;
         } else {
-           self.opened = true;
+          self.opened = true;
           self.stage = "Stage2b";
           self.descriptionData =
             "You didnt make it in time to see who called... Nevertheless,you found something.";
           self.titleData = "the church";
           self.imageSrcData = "B&W_St_Nikolaj_square.jpg";
-                   
         }
       } else {
         console.log("go further!!!!!!!!!");
@@ -217,5 +219,4 @@ h1 {
   margin-left: 25%;
   background-color: #e1e1e1;
 }
-
 </style>

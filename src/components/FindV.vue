@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <TopBar  imageName = 'icon-camera.png' title='Find The V' v-if="!isCameraOpen"></TopBar>
     <div class="web-camera-container">
        <div class="camera-button">
       <button type="button" class="button is-rounded" :class="{ 'is-primary' : !isCameraOpen, 'is-danger' : isCameraOpen}" @click="toggleCamera">
@@ -44,9 +45,12 @@
 </template>
 
 <script>
+import TopBar from './TopBar'
+
 export default {
   name: "Find_the_V",
   props: {},
+  components: {TopBar},
   data: function () {
     return {
       isCameraOpen: false,
