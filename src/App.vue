@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TopNavigation></TopNavigation>
+
     <transition name="fade" mode="out-in">
       <router-view class="main-view"></router-view>
     </transition>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import TopNavigation from "./components/TopNavigation";
+
 export default {
   name: "App",
   components: {
-    TopNavigation,
+
   },
 };
 </script>
