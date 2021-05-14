@@ -1,13 +1,19 @@
 <template>
   <div class="container">
-    <TopBar title="the church" imageName="B&W_St_Nikolaj.jpg"></TopBar>
+    <TopBar title="the church" v-bind:imageName="TopBarImage"></TopBar>
     <div class="story-box">
-      <h2 class="title">You found a note!</h2>
-      <img :src="require('../assets/sticky_note_front.png')" alt="" />
-      <div class="buttons">
-        <button>Investigate</button>
+      <h2 v-if="!pressed" class="title">You found a note!</h2>
+      <p v-if="pressed">Try using your phone to investigate the strange note</p>
+      <img v-if="!pressed" :src="require('../assets/' + image + '')" alt="" />
+      <div>
+        {{value}}
+      </div>
+      <div class="buttons" v-if="!pressed">
+        <button @click="investigateEvent()">Investigate</button>
         <button>Throw away</button>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -23,15 +29,31 @@ export default {
     return {
       investigate: false,
       throwAway: false,
+      pressed: false,
+      value: '',
+      image: 'sticky_note_front.png',
+      TopBarImage: 'B&W_St_Nikolaj.jpg'
     };
   },
 
   watch: {},
-  methods: {},
+  methods: {
+    vibrate: function () {
+        window.navigator.vibrate(100);
+    },
+
+    investigateEvent: function() {
+      this.investigate = true;
+      this.pressed = true;
+      this.TopBarImage = 'sticky_note_front.png'
+    }
+  },
 
   mounted() {},
 
   created() {
+
+    var self =this;
 if(window.DeviceOrientationEvent) {
   window.addEventListener("deviceorientation", function (event) {
     var rotateDegrees = event.alpha;
@@ -41,14 +63,21 @@ if(window.DeviceOrientationEvent) {
     handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
   }, true)
 }
-var handleOrientationEvent = function (leftToRight) {
+var handleOrientationEvent = function (frontToBack, leftToRight) {
 
-      console.log(leftToRight);
+      console.log(frontToBack, leftToRight);
     
+
+
       let left = Math.round(leftToRight);
 
-      if (left === 90 || left === -90) {
-        navigator.vibrate(100)
+      self.value = left;
+
+      if (self.investigate == true & left >= 85 ) {
+        self.vibrate();
+        self.test = true;
+        self.TopBarImage = 'sticky_note_back.png'
+
       }
 }
 
@@ -61,6 +90,13 @@ var handleOrientationEvent = function (leftToRight) {
 <style scoped>
 .story-box {
   width: 100%;
+}
+
+.story-box > p {
+  font-family: "Unica One", cursive;
+  width: 80%;
+  margin-left: 10%;
+  font-size: 1.5em;
 }
 
 .story-box > img {
