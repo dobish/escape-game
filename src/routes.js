@@ -5,6 +5,7 @@ import Stage_2b from "@/components/Stage_2b";
 import Stage_3 from "@/components/Stage_3";
 import Final from "@/components/Final";
 import FindV from "@/components/FindV";
+import Debug from "@/components/debug";
 
 
 export default [
@@ -15,5 +16,6 @@ export default [
     { path: '/stage3', component: Stage_3 },
     { path: '/final', component: Final },
     { path: '/findv', component: FindV },
+    { path: '/debug', component: Debug },
 
 ]
