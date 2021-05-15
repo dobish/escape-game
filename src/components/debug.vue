@@ -38,6 +38,8 @@ import Mapbox from "mapbox-gl";
 import TopBar from "./TopBar";
 import Overlay from "./Overlay.vue";
 
+
+
 export default {
   name: "Stage_1",
   props: {},
@@ -111,21 +113,33 @@ export default {
   },
 
   created() {
+      
     this.mapbox = Mapbox;
     var self = this;
+
+    
+    var geoLoc;
+    
 
     // var userLat = this.userCoords.latitude;
     //var userLong = this.userCoords.longitude;
     //Check if geolocation is available on the device - Give prompt to accept
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+        
+      var options = { timeout: 1000, enableHighAccuracy: true  };
+      geoLoc = navigator.geolocation;
+     geoLoc.watchPosition(showPosition, errorHandler, options);
     } else {
       console.log("Geolocation is unavailable");
     }
 
-    setInterval(function () {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    }, 1000);
+    function errorHandler(err) {
+      if (err.code == 1) {
+        alert("Error: Access is denied!");
+      } else if (err.code == 2) {
+        alert("Error: Position is unavailable!");
+      }
+    }
 
     //Get current position
     function showPosition(position) {
