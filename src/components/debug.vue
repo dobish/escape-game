@@ -13,8 +13,14 @@
     <div class="story-box">
       <p>
         <!-- <span class="username-input">{{ username }}</span> -->
-{{userCoords.latitude}}<br>
-{{userCoords.longitude}}
+        User <br />
+        {{ userCoords.latitude }}<br />
+        {{ userCoords.longitude }}
+      </p>
+      <p>
+        Church<br />
+        55.49058418501905 <br />
+        9.47216005990786
       </p>
     </div>
 
@@ -126,8 +132,6 @@ export default {
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
 
-
-
       //userLat = position.coords.latitude;
       //userLong = position.coords.longitude;
 
@@ -149,8 +153,6 @@ export default {
 
       let userLatitude = parseFloat(latitude).toFixed(3);
       let userLongitude = parseFloat(longitude).toFixed(3);
-
-        
 
       self.userCoords.latitude = userLatitude;
       self.userCoords.longitude = userLongitude;
